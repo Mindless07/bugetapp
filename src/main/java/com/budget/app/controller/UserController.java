@@ -15,12 +15,19 @@ public class UserController {
     private UserRepository userRepository;
 
     @PostMapping
-        public User createUser(@RequestBody User user) {
+    public User createUser(@RequestBody User user) {
         return userRepository.save(user);
     }
 
     @GetMapping
     public List<User> getUsers() {
         return userRepository.findAll();
+    }
+
+    @GetMapping("/{id}")
+    public User getUser(@PathVariable Long id) {
+        System.out.println(id);
+        User user = userRepository.findById(id).get();
+        return user;
     }
 }
