@@ -11,4 +11,6 @@ public interface IUsersService {
     List<User> findAll();
 
     User findById(long userId) throws Exception;
+
+    User findByUsername(String username) throws Exception;
 }
