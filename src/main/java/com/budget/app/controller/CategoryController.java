@@ -1,8 +1,11 @@
 package com.budget.app.controller;
 
+import com.budget.app.config.SecurityConfig;
 import com.budget.app.entity.Category;
 import com.budget.app.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

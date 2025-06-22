@@ -1,8 +1,11 @@
 package com.budget.app.controller;
 
+import com.budget.app.dto.AuthenticateResponseDTO;
 import com.budget.app.dto.UserRequestDTO;
 import com.budget.app.services.IAuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,12 +18,12 @@ public class AuthenticationController {
     IAuthenticationService authenticationService;
 
     @PostMapping
-    public String authenticate(@RequestBody UserRequestDTO userRequestDTO) throws Exception {
-
-        return authenticationService.authenticate(
+    public ResponseEntity<AuthenticateResponseDTO> authenticate(@RequestBody UserRequestDTO userRequestDTO) throws Exception {
+        String token =authenticationService.authenticate(
                 userRequestDTO.getUsername(), userRequestDTO.getPassword()
         );
 
+        return new ResponseEntity<>(new AuthenticateResponseDTO(token), HttpStatus.OK);
 
     }
 }
