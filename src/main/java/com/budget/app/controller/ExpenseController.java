@@ -1,7 +1,6 @@
 package com.budget.app.controller;
 
 import com.budget.app.dto.ExpenseDTO;
-import com.budget.app.entity.Expense;
 import com.budget.app.services.IExpensesService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +18,7 @@ public class ExpenseController {
     IExpensesService expensesService;
 
     @GetMapping
-    public List<Expense> getExpenses() {
+    public List<ExpenseDTO> getExpenses() throws Exception {
         return this.expensesService.findAll();
     }
 
