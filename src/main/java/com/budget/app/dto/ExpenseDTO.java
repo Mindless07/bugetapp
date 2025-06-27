@@ -4,13 +4,14 @@ import com.budget.app.entity.Expense;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @AllArgsConstructor
 public class ExpenseDTO {
-    @Id
     private long categoryId;
     private long value;
 
