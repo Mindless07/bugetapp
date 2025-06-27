@@ -2,7 +2,7 @@ package com.budget.app.controller;
 
 import com.budget.app.dto.ExpenseDTO;
 import com.budget.app.services.IExpensesService;
-import lombok.extern.slf4j.Slf4j;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,12 +10,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Slf4j
 @RestController
 @RequestMapping("/expenses")
+@AllArgsConstructor
 public class ExpenseController {
-    @Autowired
-    IExpensesService expensesService;
+    private final IExpensesService expensesService;
 
     @GetMapping
     public List<ExpenseDTO> getExpenses() throws Exception {

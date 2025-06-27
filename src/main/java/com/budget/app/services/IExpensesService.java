@@ -5,7 +5,7 @@ import com.budget.app.dto.ExpenseDTO;
 import java.util.List;
 
 public interface IExpensesService {
-    void saveExpense(ExpenseDTO expenseDTO) throws Exception;
+    void saveExpense(ExpenseDTO expenseDTO);
 
-    List<ExpenseDTO> findAll() throws Exception;
+    List<ExpenseDTO> findAll();
 }

@@ -3,6 +3,8 @@ package com.budget.app.services.implementation;
 import com.budget.app.dto.CategoryDto;
 import com.budget.app.entity.Category;
 import com.budget.app.entity.User;
+import com.budget.app.exception.NoCategoryFound;
+import com.budget.app.exception.UserNotFoundException;
 import com.budget.app.repository.CategoryRepository;
 import com.budget.app.services.ICategoryService;
 import com.budget.app.services.IUsersService;
@@ -20,17 +22,16 @@ public class CategoryServiceImp implements ICategoryService {
     private final IUsersService usersService;
 
     @Override
-    public CategoryDto getCategoryOfUser(long categoryId, long userId) throws Exception {
+    public CategoryDto getCategoryOfUser(long categoryId, long userId) throws NoCategoryFound {
         Optional<Category> category = categoryRepository.getCategoryByIdAndUserId(categoryId, userId);
 
-        if(category.isEmpty()) throw new Exception(
-                "no category ".concat(String.valueOf(categoryId)).concat(" for userId ".concat(String.valueOf(userId))));
+        if(category.isEmpty()) throw new NoCategoryFound(categoryId, userId);
 
         return new CategoryDto(category.get());
     }
 
     @Override
-    public List<CategoryDto> findAll() throws Exception {
+    public List<CategoryDto> findAll() {
         User user = usersService.getCurrentUser();
         List<Category> categories = categoryRepository.findAllByUserId(user.getId());
 
@@ -38,7 +39,7 @@ public class CategoryServiceImp implements ICategoryService {
     }
 
     @Override
-    public void save(CategoryDto category) throws Exception {
+    public void save(CategoryDto category) throws UserNotFoundException {
         User user = usersService.getCurrentUser();
 
         Category categorySave = new Category();
@@ -49,10 +50,10 @@ public class CategoryServiceImp implements ICategoryService {
     }
 
     @Override
-    public Category findByUserId(long categoryId, long userId) throws Exception {
+    public Category findByUserId(long categoryId, long userId) throws NoCategoryFound {
         Optional<Category> category = this.categoryRepository.findByIdAndUserId(categoryId, userId);
 
-        if(category.isEmpty()) throw new Exception("No category found");
+        if(category.isEmpty()) throw new NoCategoryFound(categoryId, userId);
 
         return category.get();
     }

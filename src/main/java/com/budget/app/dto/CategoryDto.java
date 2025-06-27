@@ -1,7 +1,6 @@
 package com.budget.app.dto;
 
 import com.budget.app.entity.Category;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

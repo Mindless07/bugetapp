@@ -4,6 +4,8 @@ import com.budget.app.dto.ExpenseDTO;
 import com.budget.app.entity.Category;
 import com.budget.app.entity.Expense;
 import com.budget.app.entity.User;
+import com.budget.app.exception.NoCategoryFound;
+import com.budget.app.exception.UserNotFoundException;
 import com.budget.app.repository.ExpenseRepository;
 import com.budget.app.services.ICategoryService;
 import com.budget.app.services.IExpensesService;
@@ -23,7 +25,7 @@ public class ExpensesServiceImp implements IExpensesService {
     private final IUsersService userService;
 
     @Override
-    public void saveExpense(ExpenseDTO expenseDTO) throws Exception {
+    public void saveExpense(ExpenseDTO expenseDTO) throws NoCategoryFound, UserNotFoundException {
         Expense expense = new Expense();
         User user = this.userService.getCurrentUser();
         Category category = this.categoryService.findByUserId(expenseDTO.getCategoryId(), user.getId());
@@ -36,7 +38,7 @@ public class ExpensesServiceImp implements IExpensesService {
     }
 
     @Override
-    public List<ExpenseDTO> findAll() throws Exception {
+    public List<ExpenseDTO> findAll() throws UserNotFoundException {
         User user = this.userService.getCurrentUser();
         List<ExpenseDTO> expenses = this.expenseRepository.findAllByUserId(user.getId()).stream().map(
                 ExpenseDTO::new

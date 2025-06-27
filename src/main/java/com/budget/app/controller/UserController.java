@@ -1,20 +1,19 @@
 package com.budget.app.controller;
 
 import com.budget.app.entity.User;
-import com.budget.app.repository.UserRepository;
+import com.budget.app.exception.UserNotFoundException;
 import com.budget.app.services.IUsersService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController()
 @RequestMapping("/users")
+@AllArgsConstructor
 public class UserController {
-
-    @Autowired
-    private IUsersService usersService;
+    private final IUsersService usersService;
 
     @PostMapping
     public long createUser(@RequestBody User user) {
@@ -27,7 +26,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public User getUser(@PathVariable Long id) throws Exception {
+    public User getUser(@PathVariable Long id) throws UserNotFoundException {
         return usersService.findById(id);
     }
 }
