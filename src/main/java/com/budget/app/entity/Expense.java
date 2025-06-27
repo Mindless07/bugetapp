@@ -3,7 +3,6 @@ package com.budget.app.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.web.bind.annotation.GetMapping;
 
 @Entity
 @Table(name = "expense")

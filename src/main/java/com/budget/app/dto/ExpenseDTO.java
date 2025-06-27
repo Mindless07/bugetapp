@@ -1,7 +1,6 @@
 package com.budget.app.dto;
 
 import com.budget.app.entity.Expense;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

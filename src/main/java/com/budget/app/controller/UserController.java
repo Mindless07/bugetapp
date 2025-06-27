@@ -1,13 +1,11 @@
 package com.budget.app.controller;
 
 import com.budget.app.entity.User;
-import com.budget.app.repository.UserRepository;
 import com.budget.app.services.IUsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController()
 @RequestMapping("/users")
