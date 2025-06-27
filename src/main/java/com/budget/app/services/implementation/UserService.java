@@ -4,6 +4,7 @@ import com.budget.app.entity.User;
 import com.budget.app.repository.UserRepository;
 import com.budget.app.services.IUsersService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -46,5 +47,11 @@ public class UserService implements IUsersService {
        if(user.isEmpty()) throw new Exception("No User Found");
 
        return user.get();
+    }
+
+    public User getCurrentUser() throws Exception {
+        String userName = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        return this.findByUsername(userName);
     }
 }

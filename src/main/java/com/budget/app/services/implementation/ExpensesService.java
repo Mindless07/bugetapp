@@ -6,33 +6,29 @@ import com.budget.app.entity.Expense;
 import com.budget.app.entity.User;
 import com.budget.app.repository.CategoryRepository;
 import com.budget.app.repository.ExpenseRepository;
-import com.budget.app.repository.UserRepository;
 import com.budget.app.services.IExpensesService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class ExpensesService implements IExpensesService {
-    @Autowired
-    UserRepository userRepository;
-    @Autowired
-    CategoryRepository categoryRepository;
-    @Autowired
-    ExpenseRepository expenseRepository;
+    private final CategoryRepository categoryRepository;
+    private final ExpenseRepository expenseRepository;
+    private final UserService userService;
 
     @Override
     public void saveExpense(ExpenseDTO expenseDTO) throws Exception {
         Expense expense = new Expense();
-        Optional<User> user = this.userRepository.findById(expenseDTO.getUserId());
+        User user = this.userService.getCurrentUser();
         Optional<Category> category = this.categoryRepository.findById(expenseDTO.getCategoryId());
 
-        if(user.isEmpty()) throw new Exception("No user");
         if(category.isEmpty()) throw new Exception("No Categ");
 
-        expense.setUser(user.get());
+        expense.setUser(user);
         expense.setCategory(category.get());
         expense.setValue(expenseDTO.getValue());
         this.expenseRepository.save(expense);
@@ -40,7 +36,11 @@ public class ExpensesService implements IExpensesService {
     }
 
     @Override
-    public List<Expense> findAll() {
-        return this.expenseRepository.findAll();
+    public List<ExpenseDTO> findAll() throws Exception {
+        User user = this.userService.getCurrentUser();
+        List<ExpenseDTO> expenses = this.expenseRepository.findAllByUserId(user.getId()).stream().map(
+                ExpenseDTO::new
+        ).toList();;
+        return expenses;
     }
 }

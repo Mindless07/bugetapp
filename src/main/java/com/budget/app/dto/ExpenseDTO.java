@@ -1,22 +1,21 @@
 package com.budget.app.dto;
 
+import com.budget.app.entity.Expense;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class ExpenseDTO {    @Id
+@AllArgsConstructor
+public class ExpenseDTO {
+    @Id
     private long categoryId;
-    private long userId;
     private long value;
 
-    @Override
-    public String toString() {
-        return "ExpenseDTO{" +
-                "categoryId=" + categoryId +
-                ", userId=" + userId +
-                ", value=" + value +
-                '}';
+    public ExpenseDTO(Expense expenseEntity) {
+        this.categoryId = expenseEntity.getId();
+        this.value = expenseEntity.getValue();
     }
 }
