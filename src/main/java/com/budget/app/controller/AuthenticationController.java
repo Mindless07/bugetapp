@@ -3,7 +3,7 @@ package com.budget.app.controller;
 import com.budget.app.dto.AuthenticateResponseDTO;
 import com.budget.app.dto.UserRequestDTO;
 import com.budget.app.services.IAuthenticationService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/authenticate")
+@AllArgsConstructor
 public class AuthenticationController {
-    @Autowired
-    IAuthenticationService authenticationService;
+    private final IAuthenticationService authenticationService;
 
     @PostMapping
-    public ResponseEntity<AuthenticateResponseDTO> authenticate(@RequestBody UserRequestDTO userRequestDTO) throws Exception {
-        String token =authenticationService.authenticate(
+    public ResponseEntity<AuthenticateResponseDTO> authenticate(@RequestBody UserRequestDTO userRequestDTO) {
+        String token = authenticationService.authenticate(
                 userRequestDTO.getUsername(), userRequestDTO.getPassword()
         );
 
