@@ -13,6 +13,11 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    private User user;
+
     private String label;
+
 
 }
